@@ -1,0 +1,76 @@
+<Window x:Class="TodayLOL.Views.StitchWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="拼接截图" Height="620" Width="780"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles/Common.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <DockPanel LastChildFill="True">
+
+        <!-- 顶部工具栏 -->
+        <Border DockPanel.Dock="Top" Background="{StaticResource ToolbarBrush}"
+                BorderBrush="{StaticResource BorderLightBrush}" BorderThickness="0,0,0,1" Padding="12,8">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="方向" VerticalAlignment="Center" Margin="0,0,6,0" Foreground="{StaticResource TextSecondaryBrush}"/>
+                <RadioButton x:Name="VerticalRadio" Content="纵向拼接" GroupName="Direction" IsChecked="True"
+                             Checked="Direction_Changed" Style="{StaticResource ToolButton}" Margin="0,0,4,0"/>
+                <RadioButton x:Name="HorizontalRadio" Content="横向拼接" GroupName="Direction"
+                             Checked="Direction_Changed" Style="{StaticResource ToolButton}" Margin="0,0,12,0"/>
+
+                <Border Width="1" Background="{StaticResource BorderLightBrush}" Margin="0,4"/>
+
+                <Button Content="刷新列表" Click="Refresh_Click" Style="{StaticResource ToolbarButton}" Margin="12,0"/>
+                <Button Content="预览" Click="Preview_Click" Style="{StaticResource SecondaryButton}" Width="64" Margin="0,0,8,0"/>
+                <Button Content="保存" Click="Save_Click" Style="{StaticResource PrimaryButton}" Width="64"/>
+            </StackPanel>
+        </Border>
+
+        <Grid Margin="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="280"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 左侧：图片选择列表 -->
+            <Border Grid.Column="0" Background="White" BorderBrush="{StaticResource BorderLightBrush}" BorderThickness="1">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Text="选择要拼接的图片（至少2张）" 
+                               Foreground="{StaticResource TextSecondaryBrush}" FontSize="11" Padding="8,6"
+                               Background="{StaticResource StatusBarBrush}"/>
+                    <ListBox x:Name="ImageList" SelectionMode="Extended" Background="White" BorderThickness="0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="4">
+                                    <Image Source="{Binding Thumbnail}" Width="48" Height="36" Stretch="UniformToFill" Margin="0,0,8,0"/>
+                                    <StackPanel VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding DateText}" FontSize="12"/>
+                                        <TextBlock Text="{Binding Description}" FontSize="10" Foreground="{StaticResource TextMutedBrush}" 
+                                                   TextTrimming="CharacterEllipsis" MaxWidth="180"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </Border>
+
+            <!-- 右侧：预览区 -->
+            <Border Grid.Column="1" Background="#FAFBFD" BorderBrush="{StaticResource BorderLightBrush}" BorderThickness="1" Margin="12,0,0,0">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Image x:Name="PreviewImage" Stretch="Uniform"/>
+                        <TextBlock x:Name="PreviewEmpty" Text="选择图片后点击预览" 
+                                   Foreground="{StaticResource TextMutedBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </ScrollViewer>
+            </Border>
+
+        </Grid>
+    </DockPanel>
+</Window>

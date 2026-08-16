@@ -1,0 +1,91 @@
+<Page x:Class="TodayLOL.Views.SettingsView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="设置">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles/Common.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="设置" FontSize="16" FontWeight="Bold" Margin="0,0,0,16"/>
+
+        <!-- 设置分组 -->
+        <Border Grid.Row="1" Style="{StaticResource CardBorder}" Padding="16">
+            <StackPanel>
+                <!-- 窗口标题 -->
+                <Grid Margin="0,0,0,14">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="窗口标题" VerticalAlignment="Center" Foreground="{StaticResource TextSecondaryBrush}"/>
+                    <TextBox Grid.Column="1" x:Name="WindowTitleBox" Width="300" HorizontalAlignment="Left"/>
+                </Grid>
+
+                <!-- 保存路径 -->
+                <Grid Margin="0,0,0,14">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="保存路径" VerticalAlignment="Center" Foreground="{StaticResource TextSecondaryBrush}"/>
+                    <TextBox Grid.Column="1" x:Name="SavePathBox" IsReadOnly="True" Width="360" HorizontalAlignment="Left"/>
+                    <Button Grid.Column="2" Content="浏览..." Click="SelectPath_Click" Style="{StaticResource SecondaryButton}" Width="80" Margin="8,0,0,0"/>
+                </Grid>
+
+                <!-- 开机自启 -->
+                <Grid Margin="0,0,0,14">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="开机自启" VerticalAlignment="Center" Foreground="{StaticResource TextSecondaryBrush}"/>
+                    <CheckBox Grid.Column="1" x:Name="AutoStartCheckBox" VerticalAlignment="Center"/>
+                </Grid>
+
+                <!-- 截图后自动编辑 -->
+                <Grid Margin="0,0,0,14">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="截图后自动编辑" VerticalAlignment="Center" Foreground="{StaticResource TextSecondaryBrush}"/>
+                    <CheckBox Grid.Column="1" x:Name="AutoEditCheckBox" IsChecked="True" VerticalAlignment="Center"/>
+                </Grid>
+
+                <!-- 水印位置 -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="水印位置" VerticalAlignment="Center" Foreground="{StaticResource TextSecondaryBrush}"/>
+                    <ComboBox Grid.Column="1" x:Name="WatermarkPositionCombo" Width="140" HorizontalAlignment="Left">
+                        <ComboBoxItem Content="右下角" Tag="BottomRight"/>
+                        <ComboBoxItem Content="左下角" Tag="BottomLeft"/>
+                        <ComboBoxItem Content="右上角" Tag="TopRight"/>
+                        <ComboBoxItem Content="左上角" Tag="TopLeft"/>
+                    </ComboBox>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <!-- 按钮 -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+            <Button Content="保存" Click="Save_Click" Style="{StaticResource PrimaryButton}" Width="100" Margin="0,0,8,0"/>
+            <Button Content="取消" Click="Back_Click" Style="{StaticResource SecondaryButton}" Width="100"/>
+        </StackPanel>
+
+    </Grid>
+</Page>

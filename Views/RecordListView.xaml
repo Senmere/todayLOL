@@ -1,0 +1,112 @@
+<Page x:Class="TodayLOL.Views.RecordListView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="历史记录">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles/Common.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <DockPanel Margin="0">
+
+        <!-- 筛选工具栏 -->
+        <Border DockPanel.Dock="Top" Background="{StaticResource ToolbarBrush}"
+                BorderBrush="{StaticResource BorderLightBrush}" BorderThickness="0,0,0,1" Padding="8,6">
+            <StackPanel Orientation="Horizontal">
+                <ComboBox x:Name="FilterCombo" Width="160" SelectedIndex="0" SelectionChanged="FilterCombo_SelectionChanged">
+                    <ComboBoxItem Content="全部记录" Tag="All"/>
+                    <ComboBoxItem Content="今天" Tag="Today"/>
+                    <ComboBoxItem Content="昨天" Tag="Yesterday"/>
+                    <ComboBoxItem Content="本周" Tag="Week"/>
+                    <ComboBoxItem Content="本月" Tag="Month"/>
+                    <ComboBoxItem Content="自定义日期..." Tag="Custom"/>
+                </ComboBox>
+
+                <Border Width="1" Background="{StaticResource BorderLightBrush}" Margin="8,4"/>
+
+                <ComboBox x:Name="SortCombo" Width="100" SelectedIndex="0" SelectionChanged="Sort_Changed">
+                    <ComboBoxItem Content="按时间降序" Tag="Desc"/>
+                    <ComboBoxItem Content="按时间升序" Tag="Asc"/>
+                    <ComboBoxItem Content="按描述" Tag="Description"/>
+                </ComboBox>
+
+                <Button Content="清空筛选" Click="ClearFilter_Click"
+                        Style="{StaticResource ToolbarButton}" Margin="8,0,0,0"/>
+                <Button Content="删除选中" Click="DeleteSelected_Click"
+                        Style="{StaticResource SecondaryButton}" Width="72" Margin="8,0,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- 主内容：上缩略图列表，下详情 -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- 缩略图列表 -->
+            <Border Grid.Row="0" Background="White" BorderBrush="{StaticResource BorderLightBrush}" BorderThickness="0,0,0,1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ScrollViewer Grid.Column="0" Height="110" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Padding="6,4">
+                        <Canvas x:Name="ThumbnailCanvas" MouseDown="ThumbnailCanvas_MouseDown" 
+                                MouseMove="ThumbnailCanvas_MouseMove" MouseUp="ThumbnailCanvas_MouseUp">
+                            <Rectangle x:Name="SelectionRect" Stroke="#3B78D8" StrokeThickness="1" 
+                                       StrokeDashArray="4,2" Fill="#203B78D8" Visibility="Collapsed"/>
+                        </Canvas>
+                    </ScrollViewer>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="8,0">
+                        <TextBlock x:Name="CountText" Text="0 条记录" Foreground="{StaticResource TextSecondaryBrush}" FontSize="11" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="SelectedCountText" Text="" Foreground="{StaticResource PrimaryBrush}" FontSize="11" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- 详情区域 -->
+            <Grid Grid.Row="1" Background="White">
+                <Grid x:Name="DetailGrid" Visibility="Collapsed" Margin="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="200"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0" Background="#FAFBFD" BorderBrush="{StaticResource BorderLightBrush}" BorderThickness="1" Padding="8">
+                        <Image x:Name="DetailImage" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+
+                    <StackPanel Grid.Column="1" Margin="16,0,0,0">
+                        <TextBlock Text="详细信息" FontWeight="Bold" FontSize="13" Margin="0,0,0,10"/>
+
+                        <TextBlock Text="添加时间" Foreground="{StaticResource TextSecondaryBrush}" FontSize="11"/>
+                        <TextBlock x:Name="DetailDate" FontSize="12" Margin="0,0,0,10"/>
+
+                        <TextBlock Text="描述" Foreground="{StaticResource TextSecondaryBrush}" FontSize="11"/>
+                        <TextBlock x:Name="DetailDescription" FontSize="12" TextWrapping="Wrap" Margin="0,0,0,16"/>
+
+                        <Button Content="复制描述" Click="CopyDescription_Click" Style="{StaticResource SecondaryButton}" Margin="0,0,0,6"/>
+                        <Button Content="导出图片" Click="Export_Click" Style="{StaticResource SecondaryButton}" Margin="0,0,0,6"/>
+                        <Button Content="删除记录" Click="Delete_Click" Style="{StaticResource SecondaryButton}"/>
+                    </StackPanel>
+                </Grid>
+
+                <Border x:Name="EmptyPanel" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0">
+                    <StackPanel>
+                        <TextBlock Text="暂无截图记录" FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" HorizontalAlignment="Center"/>
+                        <TextBlock Text="点击顶部新建截图按钮开始" FontSize="12" Foreground="{StaticResource TextMutedBrush}"
+                                   HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+        </Grid>
+
+    </DockPanel>
+</Page>
